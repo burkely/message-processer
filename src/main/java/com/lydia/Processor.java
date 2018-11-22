@@ -13,6 +13,7 @@ import java.util.concurrent.Executors;
 
 public class Processor {
 
+    //limit the number of threads to ensure system can sustain overhead required to run threads
     private static ExecutorService executor = Executors.newFixedThreadPool(50);
     private static final int PORT_NUMBER = 8080;
     private static ServerSocket serverSocket;
@@ -21,8 +22,8 @@ public class Processor {
         // set up and bind server socket
         createServerSocket();
 
-        // start thread and wait for incoming connection
-        // new thread for each connection to handle multiple clients
+        // start function that waits for incoming connection and starts
+        // new thread for each connection (to handle multiple clients)
         while (true) {
             startHandlerThread();
         }
@@ -38,13 +39,14 @@ public class Processor {
             // create new server socket object & bind to port
             serverSocket = new ServerSocket(PORT_NUMBER);
         } catch (BindException ex) {
+            // couldn't connect socket object to port
             serverConnectionFailed();
         }
     }
 
     private static void serverConnectionFailed() throws IOException {
         // advise connection failed, port already in use most likely
-        System.out.println("Port: "+String.valueOf(PORT_NUMBER)+" Busy");
+        System.out.println("Cannot connect to port: "+String.valueOf(PORT_NUMBER)+", system exiting.");
         // terminate program
         System.exit(-1);
     }
