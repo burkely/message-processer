@@ -18,19 +18,21 @@ class ClientHandler implements Runnable {
     }
 
     public void run() {
-        System.out.println("New client hadler thread");
+        System.out.println("New client handler thread");
 
         this.sockStream = new SocketIOStream(clientSocket);
         this.reader = sockStream.getReader();
         this.writer = sockStream.getWriter();
 
         // get input from client and store in request object
-        this.request = RequestHandler.parseRequest(new Request(), reader);
+        this.request = RequestHandler.getRequest(new Request(), reader);
+        RequestHandler.parseRequest(request);
+
 
         // send response as HTTP requires
         this.response = new Response();
-        this.response.setStatusLine("HTTP/1.1 200 OK");
-        this.response.setBody(request.getBody().toString());
+        this.response.setStatusLine("HTTP/1.1 200 ROSIE");
+        this.response.setBody(new String(request.getBody()));
 
         byte[] bytes = ResponseHandler.responseToBytes(this.response);
         ResponseHandler.sendResponse(bytes, writer);
