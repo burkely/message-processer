@@ -1,6 +1,5 @@
 package com.lydia;
 
-import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 
@@ -47,17 +46,15 @@ public class RequestHandler {
     }
 
     public static Request parseRequest(Request request) {
-
         //first check request type: GET/POST/etc
         if (request.getMethod().equals("GET")) {
-            //check path/resources required etc - probably return graphing page
+            //TODO check path/resources required etc - probably want to return graphing page
 
         } else if (request.getMethod().equals("POST")) {
             // process body
             //System.out.println("parsing request body..." + new String(request.getBody()));
             MessageHandler.processPost(new String(request.getBody()));
         }
-
         return request;
     }
 
