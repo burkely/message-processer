@@ -1,4 +1,5 @@
 # message-processer
 
-First Commit:
-Server connection, receives messages from browser, sends HTTP 200 response back. (Multithreaded server)
+To run trade processor execute Processor.java
+Server endpoint: http://localhost:8080
+Requires MySQL DB Instance called trade_messages
